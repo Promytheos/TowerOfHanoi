@@ -1,0 +1,89 @@
+#mainGameContainer {
+    width: 60vw;
+    height: 50vh;
+    background-color: lightgray;
+    position: relative;
+    border: #000000 double;
+}
+
+.tower {
+    position: absolute;
+    height: 60%;
+    width: 2.5%;
+    background-color: #000000;
+    bottom: 0;
+    border: black;
+    border-style: solid;
+}
+
+#tower1{
+    left: 20.25%;
+}
+#tower2{
+    left: 49.25%;
+}
+#tower3{
+    right: 20%;
+}
+
+.ring{
+    height: 5%;
+    z-index: 5;
+    position: absolute;
+    border-radius: 10px;
+    border: black;
+    border-style: solid;
+}
+
+#ring1{
+    width: 7%;
+    bottom: 11%;
+    background-color: #bf5858;
+}
+#ring2{
+    width: 12.5%;
+    bottom: 5.5%;
+    background-color: #008000;
+}
+#ring3{
+    width: 19%;
+    bottom: 0;
+    background-color: #FFFF00;
+}
+#ring4{
+    width: 19%;
+    bottom: 0;
+    background-color: #FFFF00;
+}
+#ring0{
+    width: 19%;
+    bottom: 0;
+    background-color: #FFFF00;
+}
+
+.selected{
+    border-color: #FFFF00;
+}
+
+#infoBar{
+    width: 60vw;
+    height: 50px;
+    background-color: #000000;
+    border: #000000 double;
+}
+
+.label{
+    width: 50%;
+    height: 100%;
+    background-color: cornflowerblue;
+    font-family: Arial, sans-serif;
+    font-size: 38px;
+}
+
+#movesContainer, #moveText, #ringText{
+    float: left;
+}
+
+#ringCountContainer{
+    float: right;
+}
