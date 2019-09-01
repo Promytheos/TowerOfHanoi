@@ -7,6 +7,26 @@
         document.body.appendChild(mainGameContainer);
         var moveCount = document.getElementById('moveCount');
         moveCount.innerText = 0;
+        var ringCountEl = document.getElementById('ringCount');
+        var ringAdder = document.getElementById('ringAdder');
+        var ringRemover = document.getElementById('ringRemover');
+        var ringCountValue = Number(ringCountEl.innerText);
+        ringAdder.onclick = function () {
+            if(ringCountValue<7){
+                ringCountValue = ringCountValue + 1;
+                ringCountEl.innerText = ringCountValue;
+                mainGameContainer.remove();
+                main();
+            }
+        }; 
+        ringRemover.onclick = function () {
+            if (ringCountValue > 3) {
+                ringCountValue = ringCountValue - 1;
+                ringCountEl.innerText = ringCountValue;
+                mainGameContainer.remove();
+                main();
+            }
+        };
     } catch (error) {
         setTimeout(() => {
             main();
@@ -111,7 +131,7 @@
                 item.setTower(this);
             }
         });
-        if (this.name === 'tower3' && this.rings.length ===3){
+        if (this.name === 'tower3' && this.rings.length === Number(ringCountValue)){
             setTimeout(() => {
                 alert('You win! Moves: ' + player.moves);
                 mainGameContainer.remove();
@@ -120,15 +140,29 @@
         }
     };
 
+    function createRings(ringCount) {
+        var rings=[];
+        for (let r = 0; r < ringCount; r++) {
+            rings[r] = new Ring(ringCount-r);
+            rings[r].element.style.width = 5 * (ringCount - r) + '%';
+        }
+        //mainGameContainer.style.width = rings[ringCount].offsetWidth * ringCount + 'px';
+        return rings;
+    }
+
+    function setupRings(rings, firstTower) {
+        rings.forEach(ring => {
+            ring.addEvent('click', function () { ring.select(rings) });
+            ring.setTower(firstTower);
+        });
+    }
     
-    var ring3 = new Ring(3),
-    ring2 = new Ring(2),
-    ring1 = new Ring(1),
-    tower1 = new Tower(1),
+    var tower1 = new Tower(1),
         tower2 = new Tower(2),
         tower3 = new Tower(3);
         var player = new Player();
-    var rings = [ring1, ring2, ring3];
+    var rings = createRings(ringCountValue);
+    setupRings(rings, tower1);
     var towers = [tower1, tower2, tower3];
     tower1.addEvent('click', function () { 
         tower1.setDestination(rings);});
@@ -136,12 +170,6 @@
         tower2.setDestination(rings) });
     tower3.addEvent('click', function () {
         tower3.setDestination(rings) });
-        ring1.addEvent('click', function () { ring1.select(rings) });
-    ring2.addEvent('click', function () { ring2.select(rings) });
-    ring3.addEvent('click', function () { ring3.select(rings) });
-    ring3.setTower(tower1);
-    ring2.setTower(tower1);
-    ring1.setTower(tower1);
 
     function solveGame(rings, towers) {
         //move 1
