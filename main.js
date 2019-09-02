@@ -1,17 +1,25 @@
 
 (function main(){
     console.clear();
-    //check if dom has loaded, if not wait 10ms and check again
-    try {
-        var mainGameContainer = document.createElement('div');
+    function createGame() {
+        mainGameContainer = document.createElement('div');
         mainGameContainer.id = 'mainGameContainer';
         document.body.appendChild(mainGameContainer);
+    }
+    //check if dom has loaded, if not wait 10ms and check again
+    var mainGameContainer, demoBtn, ringCountValue;
+    try {
+        createGame();
+        demoBtn = document.createElement('div');
+        demoBtn.id = 'demoBtn';
+        document.body.appendChild(demoBtn);
+        demoBtn.innerText = 'Demo';
         var moveCount = document.getElementById('moveCount');
         moveCount.innerText = 0;
         var ringCountEl = document.getElementById('ringCount');
         var ringAdder = document.getElementById('ringAdder');
         var ringRemover = document.getElementById('ringRemover');
-        var ringCountValue = Number(ringCountEl.innerText);
+        ringCountValue = Number(ringCountEl.innerText);
         var moveText = document.getElementById('moveText');
         moveText.innerText = 'Min: ' + Number(Math.pow(2,ringCountValue)-1) + ' Moves: ';
         ringAdder.onclick = function () {
@@ -19,6 +27,7 @@
                 ringCountValue = ringCountValue + 1;
                 ringCountEl.innerText = ringCountValue;
                 mainGameContainer.remove();
+                demoBtn.remove();
                 main();
             }
         }; 
@@ -27,6 +36,7 @@
                 ringCountValue = ringCountValue - 1;
                 ringCountEl.innerText = ringCountValue;
                 mainGameContainer.remove();
+                demoBtn.remove();
                 main();
             }
         };
@@ -35,6 +45,7 @@
             main();
         }, 10);
     }
+
 
     //create player
     function Player() {
@@ -143,6 +154,7 @@
             setTimeout(() => {
                 alert('You win! Moves: ' + player.moves);
                 mainGameContainer.remove();
+                demoBtn.remove();
                 main();
             }, 100);
         }
@@ -150,7 +162,7 @@
 
     function createRings(ringCount) {
         var rings=[];
-        for (let r = 0; r < ringCount; r++) {
+        for (var r = 0; r < ringCount; r++) {
             rings[r] = new Ring(ringCount-r);
             rings[r].element.style.width = 5 * (ringCount - r) + '%';
         }
@@ -173,6 +185,21 @@
     var player = new Player();
     var rings = createRings(ringCountValue);
     setupRings(rings, tower1);
+    demoBtn.onclick = function (params) {
+        mainGameContainer.remove();
+        demoBtn.remove();
+        createGame();
+        moveText.innerText = 'Min: ' + Number(Math.pow(2, 3) - 1) + ' Moves: ';
+        var tower1 = new Tower(1);
+        tower1.next = new Tower(2);
+        tower1.next.next = new Tower(3);
+        tower1.next.next.next = tower1;
+        var player = new Player();
+        ringCountEl.innerText = 3;
+        var rings = createRings(3);
+        setupRings(rings, tower1);
+        solve(rings, tower1);
+    };
         
     function solve(ringArray, currentTower) {
         //solve 3 rings
@@ -213,5 +240,5 @@
         }, i * 1000);
     };
 
-    solve(rings, tower1);
+    //solve(rings, tower1);
 })();
