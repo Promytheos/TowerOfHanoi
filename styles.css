@@ -7,7 +7,7 @@
     background-color: lightgray;
     position: relative;
     border: #000000 double;
-    min-width: 525px;
+    min-width: 610px;
 }
 
 .tower {
@@ -76,7 +76,7 @@
     height: 45px;
     background-color: cornflowerblue;
     border: #000000 double;
-    min-width: 525px;
+    min-width: 610px;
 }
 
 .label{
