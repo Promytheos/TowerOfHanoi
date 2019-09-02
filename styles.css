@@ -49,6 +49,16 @@
     background-color: #008;
 }
 
+#demoBtn {
+    width: 75px;
+    height: 35px;
+    background-color: cornflowerblue;
+    text-align: center;
+    font-family: Arial,
+    sans-serif;
+    font-size: 20px;
+}
+
 .rightButton{
     float: right;
     text-align: center;
