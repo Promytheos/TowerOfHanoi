@@ -12,6 +12,8 @@
         var ringAdder = document.getElementById('ringAdder');
         var ringRemover = document.getElementById('ringRemover');
         var ringCountValue = Number(ringCountEl.innerText);
+        var moveText = document.getElementById('moveText');
+        moveText.innerText = 'Min: ' + Number(Math.pow(2,ringCountValue)-1) + ' Moves: ';
         ringAdder.onclick = function () {
             if(ringCountValue<7){
                 ringCountValue = ringCountValue + 1;
@@ -173,21 +175,43 @@
     setupRings(rings, tower1);
         
     function solve(ringArray, currentTower) {
-        ringArray[ringArray.length - 1].select(ringArray);
-        currentTower.next.next.setDestination(ringArray);
-        ringArray[ringArray.length - 2].select(ringArray);
-        currentTower.next.setDestination(ringArray);
-        ringArray[ringArray.length - 1].select(ringArray);
-        currentTower.next.setDestination(ringArray);
-        ringArray[ringArray.length - 3].select(ringArray);
-        currentTower.next.next.setDestination(ringArray);
-        ringArray[ringArray.length - 1].select(ringArray);
-        currentTower.setDestination(ringArray);
-        ringArray[ringArray.length - 2].select(ringArray);
-        currentTower.next.next.setDestination(ringArray);
-        ringArray[ringArray.length - 1].select(ringArray);
-        currentTower.next.next.setDestination(ringArray);
+        //solve 3 rings
+        var i = 0;
+        setTimeout(() => {
+            ringArray[ringArray.length - 1].select(ringArray);
+            currentTower.next.next.setDestination(ringArray);
+        }, i * 1000);
+        i=i+1;
+        setTimeout(() => {
+            ringArray[ringArray.length - 2].select(ringArray);
+            currentTower.next.setDestination(ringArray);
+        }, i * 1000);
+        i=i+1;
+        setTimeout(() => {
+            ringArray[ringArray.length - 1].select(ringArray);
+            currentTower.next.setDestination(ringArray);
+        }, i * 1000);
+        i=i+1;
+        setTimeout(() => {
+            ringArray[ringArray.length - 3].select(ringArray);
+            currentTower.next.next.setDestination(ringArray);
+        }, i * 1000);
+        i=i+1;
+        setTimeout(() => {
+            ringArray[ringArray.length - 1].select(ringArray);
+            currentTower.setDestination(ringArray);
+        }, i * 1000);
+        i=i+1;
+        setTimeout(() => {
+            ringArray[ringArray.length - 2].select(ringArray);
+            currentTower.next.next.setDestination(ringArray);
+        }, i * 1000);
+        i=i+1;
+        setTimeout(() => {
+            ringArray[ringArray.length - 1].select(ringArray);
+            currentTower.next.next.setDestination(ringArray);
+        }, i * 1000);
     };
 
-    //solve(rings, tower1);
+    solve(rings, tower1);
 })();
