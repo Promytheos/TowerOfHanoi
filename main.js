@@ -1,5 +1,6 @@
 
 (function main(){
+    console.clear();
     //check if dom has loaded, if not wait 10ms and check again
     try {
         var mainGameContainer = document.createElement('div');
@@ -54,12 +55,10 @@
     }
 
     GameObject.prototype.addEvent = function (type, method) {
-        var thing = method;
         this.element.addEventListener(type, function () {
-            thing();
+            method();
         })
     };
-
     
     function Ring (priority){
         GameObject.call(this, 'ring', priority);
@@ -71,10 +70,16 @@
         GameObject.call(this, 'tower', priority);
         this.createObject();
         this.rings = [];
+        this.next = null;
+        var that = this;
+        this.addEvent('click',
+            function () {
+                that.setDestination(rings)
+            }
+        );
     }
     Tower.prototype = Object.create(GameObject.prototype);
     Ring.prototype = Object.create(GameObject.prototype);
-    
     Ring.prototype.select = function (itemArray) {
         itemArray.forEach(item => {
             if (item === this) {
@@ -93,6 +98,7 @@
     };
 
     Ring.prototype.setTower = function (destination) {
+        console.log('Ring: ' + this.name + ' to Tower: ' + destination.name);
         var canAdd = true;
         destination.rings.forEach(ring => {
             if (ring.priority < this.priority &&this.currentTower !== ''){
@@ -156,58 +162,32 @@
             ring.setTower(firstTower);
         });
     }
+
     
-    var tower1 = new Tower(1),
-        tower2 = new Tower(2),
-        tower3 = new Tower(3);
-        var player = new Player();
+    var tower1 = new Tower(1);
+    tower1.next = new Tower(2);
+    tower1.next.next = new Tower(3);
+    tower1.next.next.next = tower1;
+    var player = new Player();
     var rings = createRings(ringCountValue);
     setupRings(rings, tower1);
-    var towers = [tower1, tower2, tower3];
-    tower1.addEvent('click', function () { 
-        tower1.setDestination(rings);});
-    tower2.addEvent('click', function () {
-        tower2.setDestination(rings) });
-    tower3.addEvent('click', function () {
-        tower3.setDestination(rings) });
-
-    function solveGame(rings, towers) {
-        //move 1
-        var finalDestination = towers[towers.length-1];
-        var counter = 0;
-        rings.forEach(ring => {
-            counter++;
-            ring.select(rings);
-            towers[towers.length - counter].setDestination(rings);
-        });
-        alert('Ok');
-        //move 2
-        var dest;
-        var counter = 0;
-        towers.forEach(tower => {
-            if (Number(tower.name.split('r')[1]) === Number(rings[0].currentTower.name.split('r')[1])-1){
-                dest = tower;
-            }            
-        });
-        rings[0].select(rings);
-        dest.setDestination(rings);
-
-        //move 3
-        rings[rings.length-1].select(rings);
-        towers[towers.length-1].setDestination(rings);
-
-        //move 4
-        rings[0].select(rings);
-        towers[0].setDestination(rings);
-
-        //move 5
-        rings[1].select(rings);
-        towers[towers.length - 1].setDestination(rings);
-
-        //move 6
-        rings[0].select(rings);
-        towers[towers.length - 1].setDestination(rings);
+        
+    function solve(ringArray, currentTower) {
+        ringArray[ringArray.length - 1].select(ringArray);
+        currentTower.next.next.setDestination(ringArray);
+        ringArray[ringArray.length - 2].select(ringArray);
+        currentTower.next.setDestination(ringArray);
+        ringArray[ringArray.length - 1].select(ringArray);
+        currentTower.next.setDestination(ringArray);
+        ringArray[ringArray.length - 3].select(ringArray);
+        currentTower.next.next.setDestination(ringArray);
+        ringArray[ringArray.length - 1].select(ringArray);
+        currentTower.setDestination(ringArray);
+        ringArray[ringArray.length - 2].select(ringArray);
+        currentTower.next.next.setDestination(ringArray);
+        ringArray[ringArray.length - 1].select(ringArray);
+        currentTower.next.next.setDestination(ringArray);
     };
 
-    //solveGame(rings, towers);
+    //solve(rings, tower1);
 })();
