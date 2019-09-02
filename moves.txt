@@ -1,0 +1,41 @@
+Rings: 3
+Ring: ring1 to Tower: tower3
+Ring: ring2 to Tower: tower2
+Ring: ring1 to Tower: tower2
+Ring: ring3 to Tower: tower3
+Ring: ring1 to Tower: tower1
+Ring: ring2 to Tower: tower3
+Ring: ring1 to Tower: tower3
+
+Rings: 4
+Ring: ring1 to Tower: tower2
+Ring: ring2 to Tower: tower3
+Ring: ring1 to Tower: tower3
+Ring: ring3 to Tower: tower2
+Ring: ring1 to Tower: tower1
+Ring: ring2 to Tower: tower2
+Ring: ring1 to Tower: tower2
+Ring: ring4 to Tower: tower3
+Ring: ring1 to Tower: tower3
+Ring: ring2 to Tower: tower1
+Ring: ring1 to Tower: tower1
+Ring: ring3 to Tower: tower3
+Ring: ring1 to Tower: tower2
+Ring: ring2 to Tower: tower3
+Ring: ring1 to Tower: tower3
+
+Rings: x
+move x-1 rings to tower2
+move ringx to tower3
+
+move x-2 rings to tower1
+move ringx-1 to tower3
+
+move x-3 rings to tower2
+move ringx-2 to tower 3
+
+move x-4 rings to tower1
+move ringx-3 to tower3
+
+move x-5 rings to tower2
+move ringx-4 to tower3
